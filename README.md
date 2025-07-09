@@ -17,6 +17,12 @@ MATLAB library for atomic force microscopy (AFM) image analysis, developed to su
 - Batch processing-ready functions designed for high-throughput AFM and HS-AFM data
 
 ---
+Image Processing Toolbox 
+Computer Vision Toolbox 
+Signal Processing Toolbox 
+Curve Fitting Toolbox 
+Statistics and Machine Learning Toolbox 
+Optimization Toolbox 
 
 ## 📦 Installation
 Clone the repo and add the folder to your MATLAB path:
