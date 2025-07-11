@@ -1,37 +1,66 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![DOI](https://img.shields.io/badge/DOI-10.1002%2Fsmtd.202301766-orange)](https://doi.org/10.1002/smtd.202301766)
 
-# NanoLocz-lib 📦
-MATLAB library for atomic force microscopy (AFM) image analysis, developed to support scripting and batch processing workflows in AFM, HS-AFM, and Localization-AFM (LAFM) data analysis.
+# NanoLocz-MATLAB-Library 📦  
+*A MATLAB library for atomic force microscopy (AFM) image analysis*
 
-> This repository contains the core analysis functions behind the [NanoLocz GUI app](https://github.com/George-R-Heath/NanoLocz), packaged as a lightweight, scriptable library.
+NanoLocz-lib is a lightweight, scriptable MATLAB library designed for high-throughput AFM, high-speed AFM (HS-AFM), and Localization-AFM (LAFM) image analysis. It provides the core functionality behind the [NanoLocz GUI app](https://github.com/George-R-Heath/NanoLocz) for users who prefer scripting or batch processing workflows.
+
+---
+
+## 🔍 Key Features
+* Read AFM file types: .spm,  .asd,  .jpk, .h5-jpk,  .ibw,  .ARIS,  .tiff, .nhf, .gwy
+* Image Levelling
+* Image Alignment
+* Mask Analysis
+* Particle Detection
+* Single Particle Tracking
+* Simulation AFM
+* *Localization AFM* 
+* Export as: .tiff, .gif, .avi, .png, .jpeg, .pdf, .txt, .csv, .xls, .h5
+* Batch processing–ready functions for automated workflows
 
 ---
 
-## 🔍 Features
-- AFM file openers
-- AFM image leveling
-- Particel Detection
-- Image Alignment
-- Localization AFM
-- Batch processing-ready functions designed for high-throughput AFM and HS-AFM data
+## 🛠 Requirements
+
+NanoLocz-lib uses core MATLAB and requires the following toolboxes:
+
+- Image Processing Toolbox  
+- Computer Vision Toolbox  
+- Signal Processing Toolbox  
+- Curve Fitting Toolbox  
+- Statistics and Machine Learning Toolbox  
+- Optimization Toolbox  
 
 ---
-Image Processing Toolbox 
-Computer Vision Toolbox 
-Signal Processing Toolbox 
-Curve Fitting Toolbox 
-Statistics and Machine Learning Toolbox 
-Optimization Toolbox 
 
-## 📦 Installation
-Clone the repo and add the folder to your MATLAB path:
-```matlab
-addpath(genpath('path/to/NanoLocz-lib'))
-```
+## 📦 Installation & Usage
+
+1. Clone or download this repository.
+2. Add the NanoLocz-lib folder (and its subfolders) to your MATLAB path:
+   ```matlab
+   addpath(genpath('path/to/NanoLocz-lib'))
+
+3. Call functions directly in your scripts, see the [Example Workbooks](https://github.com/George-R-Heath/NanoLocz-Matlab-Library/tree/main/Example%20Workbooks) scripts included in the repository as templates for common analysis workflows.
+   
+## Disclaimer:
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Contributing
+Contributions are extremely welcome.
 
 ## License
-Distributed under the GNU GPL v3.0 License.
+Distributed under the terms of the [GNU GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.txt) license.
 
 ## Citation
 
