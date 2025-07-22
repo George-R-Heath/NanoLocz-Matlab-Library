@@ -73,15 +73,54 @@ if  any(found_ch)
 else
     s.channel = 'Height-trace';
     ch = 'Height-retrace';
+    
 end
 
 id_ch = find(strcmp(s.channels, ch));
 attrs = info.Groups.Groups(id_ch).Attributes;
 names = {attrs.Name};
-idx = strcmp(names, 'net-encoder.scaling.offset');
-offs = attrs(idx).Value;
-idx = strcmp(names, 'net-encoder.scaling.multiplier');
-multi = attrs(idx).Value;
+
+% Try net-encoder first
+% Default to raw encoder scaling
+offs = attrs(strcmp(names, 'encoder.scaling.offset')).Value;
+multi = attrs(strcmp(names, 'encoder.scaling.multiplier')).Value;
+net = 0;
+
+% Try net-encoder first
+if any(strcmp(names, 'net-encoder.scaling.multiplier'))
+    offs = attrs(strcmp(names, 'net-encoder.scaling.offset')).Value;
+    multi = attrs(strcmp(names, 'net-encoder.scaling.multiplier')).Value;
+    net = 1;
+
+% Try calibrated path if available
+elseif any(strcmp(names, 'conversion.calibrated.scaling.multiplier'))
+    offs = attrs(strcmp(names, 'conversion.calibrated.scaling.offset')).Value;
+    multi = attrs(strcmp(names, 'conversion.calibrated.scaling.multiplier')).Value;
+
+    multi_nominal = attrs(strcmp(names, 'conversion.nominal.scaling.multiplier')).Value;
+    offs_nominal = attrs(strcmp(names, 'conversion.nominal.scaling.offset')).Value;
+    multi_encoder = attrs(strcmp(names, 'encoder.scaling.multiplier')).Value;
+    offs_encoder = attrs(strcmp(names, 'encoder.scaling.offset')).Value;
+
+    multi = multi * multi_nominal * multi_encoder;
+    offs = offs_encoder * multi_nominal * multi + offs_nominal * multi + offs;
+    net = 1;
+
+% Try amplitude-specific conversion (e.g. distanceamplitude)
+elseif any(strcmp(names, 'conversion.distanceamplitude.scaling.multiplier'))
+    offs = attrs(strcmp(names, 'conversion.distanceamplitude.scaling.offset')).Value;
+    multi = attrs(strcmp(names, 'conversion.distanceamplitude.scaling.multiplier')).Value;
+
+    multi_amp = attrs(strcmp(names, 'conversion.voltsamplitude.scaling.multiplier')).Value;
+    offs_amp = attrs(strcmp(names, 'conversion.voltsamplitude.scaling.offset')).Value;
+
+    multi_encoder = attrs(strcmp(names, 'encoder.scaling.multiplier')).Value;
+    offs_encoder = attrs(strcmp(names, 'encoder.scaling.offset')).Value;
+
+    multi = multi * multi_amp * multi_encoder;
+    offs = offs_encoder * multi_amp * multi + offs_amp * multi + offs;
+    net = 1;
+end
 
 image_group = info.Groups.Groups(id_ch);
 dataset_name = image_group.Datasets(1).Name;
@@ -95,10 +134,12 @@ for i = 1:s.numberofFrames
     im(:, :, i) = reshape(img_data(i, :), [s.xPixel, s.yPixel])';
 end
 
- im = (flip(im)*multi)+offs;
- switch s.channel
+im = (flip(im)*multi)+offs;
+switch s.channel
     case {'Height-retrace','Height-trace'}
-       im = im*1e9;
+        if net==1
+            im = im*1e9;
+        end
     otherwise
 end
 end
