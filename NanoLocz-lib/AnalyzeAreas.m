@@ -48,7 +48,12 @@ if numel(sd)>2
         end
         
         if i==1
-            T1 = struct2table(regionprops(M(:,:,i),img(:,:,i),props));
+            S = regionprops(M(:,:,i), img(:,:,i), props);
+            if isscalar(S)
+                T1 = struct2table(S, 'AsArray', true);
+            else
+                T1 = struct2table(S);
+            end
             frame= ones(numel(T1(:,1)),1).*i;
             times = ones(numel(T1(:,1)),1).*time(i);
             T1 = addvars(T1,frame,'Before',1,'NewVariableNames','Frame');
@@ -68,7 +73,13 @@ if numel(sd)>2
             end
 
         else
-            si = struct2table(regionprops(M(:,:,i),img(:,:,i),props));
+            S = regionprops(M(:,:,i), img(:,:,i), props);
+
+            if isscalar(S)
+                si = struct2table(S, 'AsArray', true);
+            else
+                si = struct2table(S);
+            end
             frame= ones(numel(si(:,1)),1).*i;
         try             
             times = ones(numel(si(:,1)),1).*time(i);
@@ -92,7 +103,6 @@ if numel(sd)>2
             if ismember('Perimeter', props)
                 si.Perimeter = si.Perimeter*scale(fr);
             end
-
 
             T1 = [T1;si];
         end
@@ -181,7 +191,7 @@ end
     
     T1 = removevars(T1, {'PixelValues'});
     x = T1.Centroid(:,1);
-    y = T1.Centroid(:,1);
+    y = T1.Centroid(:,2);
     T1 = removevars(T1, {'Centroid'});
     T1 = addvars(T1,x,'Before',4,'NewVariableNames','x');
     T1 = addvars(T1,y,'Before',5,'NewVariableNames','y');
