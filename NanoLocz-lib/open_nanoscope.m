@@ -133,8 +133,8 @@ end
 s.SpringConst     = param(17).values;
 s.AspectRatio     = param(18).values;
 s.Direction       = param(19).values;
-[~, remain]    = strtok(fname,'.');
-file_number     = str2double(remain(2:4));
+%[~, remain]    = strtok(fname,'.');
+%file_number     = str2double(remain(2:4));
 
 L = length(image_pos);                                                                                                       % Sets the number of image channels
 channel_info = struct('Trace',cell(L,1),'Name',cell(L,1),'Finalscaling',cell(L,1),'Unit',cell(L,1));

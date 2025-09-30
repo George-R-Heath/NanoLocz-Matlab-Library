@@ -23,14 +23,18 @@ for i = 1:numel(ch_info.Groups)
 end
 
 if  found_ch == 0
-    s.channel = 'HeightTrace';
-    ch = 'HeightTrace';
+    s.channel = s.channels{1};
+    ch = s.channels{1};
 else
      s.channel = ch;
 end
 
+try
 scale0 = max(h5readatt(f,'/DataSetInfo/Global/Channels/HeightTrace/ImageDims','DimScaling'),[],'all');
 %s.units = h5readatt(f,'/DataSetInfo/Global/Channels/HeightTrace/ImageDims','DataUnits');
+catch
+scale0 = max(h5readatt(f,'/DataSetInfo/Global/Channels/HeightRetrace/ImageDims','DimScaling'), [], 'all');
+end
 
 scan_size_list = info.Groups(2).Groups(1).Groups;
 for i = 1:numel(scan_size_list)
